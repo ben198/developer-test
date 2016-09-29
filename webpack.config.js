@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
-    watch: true,
     output: {
         filename: 'bundle.js'
     },
@@ -16,6 +15,14 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015']
                 }
+            },
+            {
+                test: /\.css$/,
+                loaders: ['style', 'css']
+            },
+            {
+                test: /\.scss$/,
+                loaders: ['style', 'css', 'sass']
             }
         ]
     },

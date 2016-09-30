@@ -11,6 +11,9 @@
             float: none;
         }
     }
+}
+
+.form-step {
     & > div {
         margin-bottom: 12px;
         @include clearfix;

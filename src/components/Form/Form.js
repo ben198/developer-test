@@ -1,11 +1,18 @@
 import React from 'react';
 
 export default class Form extends React.Component {
-    render() {
+
+    constructor(props) {
+        super(props);
+        this.step1Complete = false;
+        this.formSubmitted = false;
+    }
+
+    renderFirstPart() {
         return (
-            <form className="form" action="/submit-survey" method="post">
+            <div className="form-step form-step-1">
                 <div>
-                    <label for="title">Title:</label>
+                    <label htmlFor="title">Title:</label>
                     <div className="inputContainer">
                         <select id="title" name="user_title">
                             <option>Mr</option>
@@ -16,7 +23,7 @@ export default class Form extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <label for="name">Name:</label>
+                    <label htmlFor="name">Name:</label>
                     <div className="inputContainer">
                         <input
                             type="text"
@@ -25,7 +32,7 @@ export default class Form extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <label for="dateOfBirth">Date of Birth:</label>
+                    <label htmlFor="dateOfBirth">Date of Birth:</label>
                     <div className="inputContainer">
                         <input
                             type="date"
@@ -33,8 +40,15 @@ export default class Form extends React.Component {
                             name="user_dob"/>
                     </div>
                 </div>
+            </div>
+        );
+    }
+
+    renderSecondPart() {
+        return(
+            <div className="form-step form-step-2">
                 <div>
-                    <label for="currentLocation">Current Location:</label>
+                    <label htmlFor="currentLocation">Current Location:</label>
                     <div className="inputContainer">
                         <input
                             type="text"
@@ -43,7 +57,7 @@ export default class Form extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <label for="currentDateAndTime">Current Date/Time:</label>
+                    <label htmlFor="currentDateAndTime">Current Date/Time:</label>
                     <div className="inputContainer">
                         <input
                             type="datetime-local"
@@ -52,7 +66,7 @@ export default class Form extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <label for="feedback">User Feedback:</label>
+                    <label htmlFor="feedback">User Feedback:</label>
                     <div className="inputContainer">
                         <textarea
                             id="feedback"
@@ -63,7 +77,17 @@ export default class Form extends React.Component {
                 <div>
                     <button type="submit">Submit</button>
                 </div>
+            </div>
+        );
+    }
+
+    render() {
+        return (
+            <form className="form" action="/submit-survey" method="post">
+                {this.renderFirstPart()}
+                {this.step1Complete ? this.renderSecondPart() : null}
             </form>
         );
     }
+
 }

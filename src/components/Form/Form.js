@@ -6,15 +6,48 @@ export default class Form extends React.Component {
         super(props);
         this.step1Complete = false;
         this.formSubmitted = false;
+        this.state = {
+            title: '',
+            name: '',
+            dateOfBirth: '',
+            currentLocation: '',
+            currentDateAndTime: '',
+            feedback: ''
+        };
+    }
+
+    handleChange(e) {
+        switch (e.target.name) {
+            case 'title':
+                this.setState({ title: e.target.value });
+                break;
+            case 'name':
+                this.setState({ name: e.target.value });
+                break;
+            case 'dateOfBirth':
+                this.setState({ dateOfBirth: e.target.value });
+                break;
+            case 'currentLocation':
+                this.setState({ currentLocation: e.target.value });
+                break;
+            case 'currentDateAndTime':
+                this.setState({ currentDateAndTime: e.target.value });
+                break;
+            case 'feedback':
+                this.setState({ feedback: e.target.value });
+                break;
+        }
     }
 
     renderFirstPart() {
         return (
             <div className="form-step form-step-1">
                 <div>
-                    <label htmlFor="title">Title:</label>
+                    <label>Title:</label>
                     <div className="inputContainer">
-                        <select id="title" name="user_title">
+                        <select
+                            name="title"
+                            onChange={this.handleChange.bind(this)}>
                             <option>Mr</option>
                             <option>Mrs</option>
                             <option>Master</option>
@@ -23,21 +56,21 @@ export default class Form extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="name">Name:</label>
+                    <label>Name:</label>
                     <div className="inputContainer">
                         <input
                             type="text"
-                            id="name"
-                            name="user_name"/>
+                            name="name"
+                            onChange={this.handleChange.bind(this)}/>
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="dateOfBirth">Date of Birth:</label>
+                    <label>Date of Birth:</label>
                     <div className="inputContainer">
                         <input
                             type="date"
-                            id="dateOfBirth"
-                            name="user_dob"/>
+                            name="dateOfBirth"
+                            onChange={this.handleChange.bind(this)}/>
                     </div>
                 </div>
             </div>
@@ -48,34 +81,34 @@ export default class Form extends React.Component {
         return(
             <div className="form-step form-step-2">
                 <div>
-                    <label htmlFor="currentLocation">Current Location:</label>
+                    <label>Current Location:</label>
                     <div className="inputContainer">
                         <input
                             type="text"
-                            id="currentLocation"
-                            name="user_location"/>
+                            name="currentLocation"
+                            onChange={this.handleChange.bind(this)}/>
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="currentDateAndTime">Current Date/Time:</label>
+                    <label>Current Date/Time:</label>
                     <div className="inputContainer">
                         <input
                             type="datetime-local"
-                            id="currentDateAndTime"
-                            name="user_dateAndTime"/>
+                            name="currentDateAndTime"
+                            onChange={this.handleChange.bind(this)}/>
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="feedback">User Feedback:</label>
+                    <label>User Feedback:</label>
                     <div className="inputContainer">
                         <textarea
-                            id="feedback"
-                            name="user_feedback">
+                            name="feedback"
+                            onChange={this.handleChange.bind(this)}>
                         </textarea>
                     </div>
                 </div>
                 <div>
-                    <button type="submit">Submit</button>
+                    <button type="button">Submit</button>
                 </div>
             </div>
         );
@@ -83,7 +116,7 @@ export default class Form extends React.Component {
 
     render() {
         return (
-            <form className="form" action="/submit-survey" method="post">
+            <form className="form">
                 {this.renderFirstPart()}
                 {this.step1Complete ? this.renderSecondPart() : null}
             </form>

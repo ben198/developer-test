@@ -4,9 +4,9 @@ export default class Form extends React.Component {
 
     constructor(props) {
         super(props);
-        this.step1Complete = false;
-        this.formSubmitted = false;
         this.state = {
+            step1Complete: false,
+            formSubmitted: false,
             title: '',
             name: '',
             dateOfBirth: '',
@@ -16,38 +16,54 @@ export default class Form extends React.Component {
         };
     }
 
-    handleChange(e) {
-        switch (e.target.name) {
+    updateState(element, cb) {
+        switch (element.name) {
             case 'title':
-                this.setState({ title: e.target.value });
+                this.setState({ title: element.value }, cb);
                 break;
             case 'name':
-                this.setState({ name: e.target.value });
+                this.setState({ name: element.value }, cb);
                 break;
             case 'dateOfBirth':
-                this.setState({ dateOfBirth: e.target.value });
+                this.setState({ dateOfBirth: element.value }, cb);
                 break;
             case 'currentLocation':
-                this.setState({ currentLocation: e.target.value });
+                this.setState({ currentLocation: element.value }, cb);
                 break;
             case 'currentDateAndTime':
-                this.setState({ currentDateAndTime: e.target.value });
+                this.setState({ currentDateAndTime: element.value }, cb);
                 break;
             case 'feedback':
-                this.setState({ feedback: e.target.value });
+                this.setState({ feedback: element.value }, cb);
                 break;
         }
+    }
+
+    handleChange(e) {
+        // Every time the user changes the value in a form input, that new value
+        // is saved to the state property. If the title, name, and dob fields all
+        // contain some value, then the 'step1Complete' flag will change to true
+        // and the second part of the form will render
+        this.updateState(e.target, () => {
+            if (this.state.title && this.state.name && this.state.dateOfBirth) {
+                this.setState({step1Complete: true});
+            } else {
+                this.setState({step1Complete: false});
+            }
+        });
     }
 
     renderFirstPart() {
         return (
             <div className="form-step form-step-1">
+                <h3>Step 1</h3>
                 <div>
                     <label>Title:</label>
                     <div className="inputContainer">
                         <select
                             name="title"
                             onChange={this.handleChange.bind(this)}>
+                            <option></option>
                             <option>Mr</option>
                             <option>Mrs</option>
                             <option>Master</option>
@@ -80,6 +96,7 @@ export default class Form extends React.Component {
     renderSecondPart() {
         return(
             <div className="form-step form-step-2">
+                <h3>Step 2</h3>
                 <div>
                     <label>Current Location:</label>
                     <div className="inputContainer">
@@ -118,7 +135,7 @@ export default class Form extends React.Component {
         return (
             <form className="form">
                 {this.renderFirstPart()}
-                {this.step1Complete ? this.renderSecondPart() : null}
+                {this.state.step1Complete ? this.renderSecondPart() : null}
             </form>
         );
     }

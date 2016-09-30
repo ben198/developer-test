@@ -12,5 +12,9 @@
   box-sizing: border-box;
 }
 
+.hidden {
+    display: none;
+}
+
 @import './components/App/App.scss';
 @import './components/Form/Form.scss';

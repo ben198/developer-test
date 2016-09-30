@@ -13,6 +13,7 @@ app.use(express.static('dist'));
 
 app.post('/submit-survey', (req, res) => {
     console.log(req.body);
+    res.send('success');
 });
 
 app.listen(port, () => {

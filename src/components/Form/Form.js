@@ -63,7 +63,10 @@ export default class Form extends React.Component {
             currentDateAndTime: this.state.currentDateAndTime,
             feedback: this.state.feedback            
         };
-        qwest.post('http://localhost:3000/submit-survey', formContent);
+        qwest.post('http://localhost:3000/submit-survey', formContent)
+        .then((xhr, response) => {
+            this.setState({formSubmitted: true});
+        });
     }
 
     renderFirstPart() {
@@ -139,6 +142,7 @@ export default class Form extends React.Component {
                 </div>
                 <div>
                     <button
+                        className={this.state.formSubmitted ? 'hidden' : null}
                         type="button"
                         onClick={this.submitForm.bind(this)}>
                         Submit</button>
@@ -147,12 +151,21 @@ export default class Form extends React.Component {
         );
     }
 
+    renderThankYou() {
+        return (
+            <h2 className="thankYou">Thank you for completing our form :)</h2>
+        );
+    }
+
     render() {
         return (
-            <form className="form">
-                {this.renderFirstPart()}
-                {this.state.step1Complete ? this.renderSecondPart() : null}
-            </form>
+            <div>
+                <form className="form">
+                    {this.renderFirstPart()}
+                    {this.state.step1Complete ? this.renderSecondPart() : null}
+                </form>
+                {this.state.formSubmitted ? this.renderThankYou() : null}
+            </div>
         );
     }
 

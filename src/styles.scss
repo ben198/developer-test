@@ -12,6 +12,15 @@
   box-sizing: border-box;
 }
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 58px;
+}
+
 .hidden {
     display: none;
 }

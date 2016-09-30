@@ -1,4 +1,5 @@
 import React from 'react';
+import qwest from 'qwest';
 
 export default class Form extends React.Component {
 
@@ -51,6 +52,18 @@ export default class Form extends React.Component {
                 this.setState({step1Complete: false});
             }
         });
+    }
+
+    submitForm() {
+        const formContent = {
+            title: this.state.title,
+            name: this.state.name,
+            dateOfBirth: this.state.dateOfBirth,
+            currentLocation: this.state.currentLocation,
+            currentDateAndTime: this.state.currentDateAndTime,
+            feedback: this.state.feedback            
+        };
+        qwest.post('http://localhost:3000/submit-survey', formContent);
     }
 
     renderFirstPart() {
@@ -125,7 +138,10 @@ export default class Form extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <button type="button">Submit</button>
+                    <button
+                        type="button"
+                        onClick={this.submitForm.bind(this)}>
+                        Submit</button>
                 </div>
             </div>
         );
